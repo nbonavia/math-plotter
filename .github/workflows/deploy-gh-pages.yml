@@ -3,10 +3,10 @@
 name: Deploy Vue App to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch (main or master)
+  # Runs on pushes targeting the 'master' branch
   push:
     branches:
-      - main # Or 'master', or your default branch name
+      - master # <--- MODIFIED FROM 'main' TO 'master'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -32,31 +32,30 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # Always use the latest major version
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18' # Or '20', or your preferred Node.js LTS version
-          cache: 'npm' # Cache npm dependencies
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci # 'ci' is generally faster and more reliable for CI environments
+        run: npm ci
 
       - name: Build project
-        # Pass the GITHUB_REPOSITORY to the build script so vite.config.js can use it
         run: npm run build
         env:
-          GITHUB_REPOSITORY: ${{ github.repository }} # Exposes it to the build process
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
 
       - name: Upload build artifact
-        uses: actions/upload-pages-artifact@v3 # v3 is current as of writing
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Path to the folder produced by 'npm run build'
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 # v4 is current as of writing
+        uses: actions/deploy-pages@v4
