@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [vue()],
   base:
     process.env.NODE_ENV === 'production'
-      ? '/your-repo-name/' // Replace 'your-repo-name' with your actual GitHub repository name
+      ? '/math-plotter/' // Replace 'your-repo-name' with your actual GitHub repository name
       : '/',
 })
